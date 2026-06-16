@@ -31,7 +31,7 @@ internal sealed class ConfigureSwaggerGenOptions : IConfigureNamedOptions<Swagge
     {
         var openApiInfo = new OpenApiInfo
         {
-            Title = $"FlightAdvisor v{apiVersionDescription.ApiVersion}",
+            Title = $"WatchAdvisor v{apiVersionDescription.ApiVersion}",
             Version = apiVersionDescription.ApiVersion.ToString()
         };
 
