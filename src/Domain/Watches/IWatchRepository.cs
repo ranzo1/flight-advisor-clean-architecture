@@ -1,7 +1,7 @@
 using Domain.Watches.Entities;
 using Domain.Watches.ValueObjects;
 
-namespace Domain.Watches.Repositories;
+namespace Domain.Watches;
 
 public interface IWatchRepository
 {
