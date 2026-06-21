@@ -12,5 +12,9 @@ internal sealed class CreateUserCommandValidator : AbstractValidator<CreateUserC
         RuleFor(c => c.Email)
             .NotEmpty().WithErrorCode(UserErrorCodes.CreateUser.MissingEmail)
             .EmailAddress().WithErrorCode(UserErrorCodes.CreateUser.InvalidEmail);
+
+        RuleFor(c => c.Password)
+            .NotEmpty()
+            .MinimumLength(8);
     }
 }

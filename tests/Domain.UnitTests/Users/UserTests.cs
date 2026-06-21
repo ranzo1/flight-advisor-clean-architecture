@@ -1,4 +1,5 @@
-﻿using Domain.Users;
+using Domain.Users;
+using Domain.Users.Enums;
 using Domain.Users.ValueObjects;
 using FluentAssertions;
 
@@ -12,9 +13,10 @@ public sealed class UserTests
         // Arrange
         Email email = Email.Create("test@test.com").Value;
         var name = new Name("Full Name");
+        var passwordHash = new PasswordHash("hashed_password");
 
         // Act
-        var user = User.Create(email, name, true);
+        var user = User.Create(email, name, passwordHash, Role.User, true);
 
         // Assert
         user.Should().NotBeNull();
@@ -26,9 +28,10 @@ public sealed class UserTests
         // Arrange
         Email email = Email.Create("test@test.com").Value;
         var name = new Name("Full Name");
+        var passwordHash = new PasswordHash("hashed_password");
 
         // Act
-        var user = User.Create(email, name, true);
+        var user = User.Create(email, name, passwordHash, Role.User, true);
 
         // Assert
         user.DomainEvents

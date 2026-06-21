@@ -18,6 +18,7 @@ internal sealed class Register : IEndpoint
             var command = new CreateUserCommand(
                 request.Email,
                 request.Name,
+                request.Password,
                 request.HasPublicProfile);
 
             Result<Guid> result = await sender.Send(command, cancellationToken);

@@ -1,3 +1,3 @@
-﻿namespace Application.Users.Create;
+namespace Application.Users.Create;
 
-public sealed record CreateUserRequest(string Email, string Name, bool HasPublicProfile);
+public sealed record CreateUserRequest(string Email, string Name, string Password, bool HasPublicProfile);

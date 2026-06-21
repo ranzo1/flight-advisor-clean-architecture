@@ -1,6 +1,6 @@
 ﻿using SharedKernel;
 
-namespace Domain.Users;
+namespace Domain.Users.ValueObjects;
 
 public sealed record Email
 {

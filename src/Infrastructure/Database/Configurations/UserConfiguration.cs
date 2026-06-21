@@ -1,4 +1,5 @@
-﻿using Domain.Users;
+using Domain.Users;
+using Domain.Users.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,5 +18,13 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.ComplexProperty(
             u => u.Name,
             b => b.Property(e => e.Value).HasColumnName("name"));
+
+        builder.ComplexProperty(
+            u => u.PasswordHash,
+            b => b.Property(p => p.Value).HasColumnName("password_hash"));
+
+        builder.Property(u => u.Role)
+            .HasConversion<string>()
+            .HasColumnName("role");
     }
 }

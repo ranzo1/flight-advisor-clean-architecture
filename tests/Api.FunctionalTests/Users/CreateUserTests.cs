@@ -20,7 +20,7 @@ public sealed class CreateUserTests : BaseFunctionalTest
     public async Task Should_ReturnBadRequest_WhenEmailIsMissing()
     {
         // Arrange
-        var request = new CreateUserRequest("", "name", true);
+        var request = new CreateUserRequest("", "name", "Password123", true);
 
         // Act
         HttpResponseMessage response = await HttpClient.PostAsJsonAsync("api/v1/users", request);
@@ -42,7 +42,7 @@ public sealed class CreateUserTests : BaseFunctionalTest
     public async Task Should_ReturnBadRequest_WhenEmailIsInvalid()
     {
         // Arrange
-        var request = new CreateUserRequest("test", "name", true);
+        var request = new CreateUserRequest("test", "name", "Password123", true);
 
         // Act
         HttpResponseMessage response = await HttpClient.PostAsJsonAsync("api/v1/users", request);
@@ -61,7 +61,7 @@ public sealed class CreateUserTests : BaseFunctionalTest
     public async Task Should_ReturnBadRequest_WhenNameIsMissing()
     {
         // Arrange
-        var request = new CreateUserRequest("test@test.com", "", true);
+        var request = new CreateUserRequest("test@test.com", "", "Password123", true);
 
         // Act
         HttpResponseMessage response = await HttpClient.PostAsJsonAsync("api/v1/users", request);
@@ -80,7 +80,7 @@ public sealed class CreateUserTests : BaseFunctionalTest
     public async Task Should_ReturnOk_WhenRequestIsValid()
     {
         // Arrange
-        var request = new CreateUserRequest("test@test.com", "name", true);
+        var request = new CreateUserRequest("test@test.com", "name", "Password123", true);
 
         // Act
         HttpResponseMessage response = await HttpClient.PostAsJsonAsync("api/v1/users", request);
@@ -93,7 +93,7 @@ public sealed class CreateUserTests : BaseFunctionalTest
     public async Task Should_ReturnConflict_WhenUserExists()
     {
         // Arrange
-        var request = new CreateUserRequest("test@test.com", "name", true);
+        var request = new CreateUserRequest("test@test.com", "name", "Password123", true);
 
         // Act
         await HttpClient.PostAsJsonAsync("api/v1/users", request);

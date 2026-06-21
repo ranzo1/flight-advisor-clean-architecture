@@ -17,7 +17,7 @@ public sealed class CreateUserTests : BaseIntegrationTest
     public async Task Handle_Should_CreateUser_WhenCommandIsValid()
     {
         // Arrange
-        var command = new CreateUserCommand(Faker.Internet.Email(), Faker.Internet.UserName(), true);
+        var command = new CreateUserCommand(Faker.Internet.Email(), Faker.Internet.UserName(), "Password123", true);
 
         // Act
         Result<Guid> result = await Sender.Send(command);
@@ -30,7 +30,7 @@ public sealed class CreateUserTests : BaseIntegrationTest
     public async Task Handle_Should_AddUserToDatabase_WhenCommandIsValid()
     {
         // Arrange
-        var command = new CreateUserCommand(Faker.Internet.Email(), Faker.Internet.UserName(), true);
+        var command = new CreateUserCommand(Faker.Internet.Email(), Faker.Internet.UserName(), "Password123", true);
 
         // Act
         Result<Guid> result = await Sender.Send(command);

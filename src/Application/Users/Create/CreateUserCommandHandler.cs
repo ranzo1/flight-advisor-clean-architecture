@@ -1,6 +1,8 @@
-﻿using Application.Abstractions.Data;
+using Application.Abstractions.Authentication;
+using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Domain.Users;
+using Domain.Users.Enums;
 using Domain.Users.ValueObjects;
 using SharedKernel;
 
@@ -8,6 +10,7 @@ namespace Application.Users.Create;
 
 internal sealed class CreateUserCommandHandler(
     IUserRepository userRepository,
+    IPasswordHasher passwordHasher,
     IUnitOfWork unitOfWork) : ICommandHandler<CreateUserCommand, Guid>
 {
     public async Task<Result<Guid>> Handle(
@@ -27,7 +30,9 @@ internal sealed class CreateUserCommandHandler(
         }
 
         var name = new Name(command.Name);
-        var user = User.Create(email, name, command.HasPublicProfile);
+        PasswordHash passwordHash = passwordHasher.Hash(command.Password);
+
+        var user = User.Create(email, name, passwordHash, Role.User, command.HasPublicProfile);
 
         userRepository.Insert(user);
 

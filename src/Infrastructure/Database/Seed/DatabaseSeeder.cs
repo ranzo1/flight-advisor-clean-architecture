@@ -1,3 +1,6 @@
+using Domain.Users;
+using Domain.Users.Enums;
+using Domain.Users.ValueObjects;
 using Domain.Watches.Entities;
 using Domain.Watches.Enums;
 using SharedKernel;
@@ -7,6 +10,29 @@ namespace Infrastructure.Database.Seed;
 internal static class DatabaseSeeder
 {
     public static void Seed(ApplicationDbContext context)
+    {
+        SeedAdminUser(context);
+        SeedWatches(context);
+    }
+
+    private static void SeedAdminUser(ApplicationDbContext context)
+    {
+        if (context.Users.Any(u => u.Role == Role.Admin))
+        {
+            return;
+        }
+
+        Email adminEmail = Email.Create("admin@watchadvisor.com").Value;
+        var adminName = new Name("Admin");
+        var adminPasswordHash = new PasswordHash(BCrypt.Net.BCrypt.HashPassword("Admin123!"));
+
+        var admin = User.Create(adminEmail, adminName, adminPasswordHash, Role.Admin, false);
+
+        context.Users.Add(admin);
+        context.SaveChanges();
+    }
+
+    private static void SeedWatches(ApplicationDbContext context)
     {
         if (context.Watches.Any())
         {

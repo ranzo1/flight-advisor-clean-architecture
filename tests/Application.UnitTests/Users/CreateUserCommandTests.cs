@@ -1,6 +1,8 @@
-﻿using Application.Abstractions.Data;
+using Application.Abstractions.Authentication;
+using Application.Abstractions.Data;
 using Application.Users.Create;
 using Domain.Users;
+using Domain.Users.ValueObjects;
 using FluentAssertions;
 using NSubstitute;
 using SharedKernel;
@@ -9,19 +11,24 @@ namespace Application.UnitTests.Users;
 
 public sealed class CreateUserCommandTests
 {
-    private static readonly CreateUserCommand Command = new("test@test.com", "FullName", true);
+    private static readonly CreateUserCommand Command = new("test@test.com", "FullName", "Password123", true);
 
     private readonly CreateUserCommandHandler _handler;
     private readonly IUserRepository _userRepositoryMock;
+    private readonly IPasswordHasher _passwordHasherMock;
     private readonly IUnitOfWork _unitOfWorkMock;
 
     public CreateUserCommandTests()
     {
         _userRepositoryMock = Substitute.For<IUserRepository>();
+        _passwordHasherMock = Substitute.For<IPasswordHasher>();
         _unitOfWorkMock = Substitute.For<IUnitOfWork>();
+
+        _passwordHasherMock.Hash(Arg.Any<string>()).Returns(new PasswordHash("hashed"));
 
         _handler = new CreateUserCommandHandler(
             _userRepositoryMock,
+            _passwordHasherMock,
             _unitOfWorkMock);
     }
 
