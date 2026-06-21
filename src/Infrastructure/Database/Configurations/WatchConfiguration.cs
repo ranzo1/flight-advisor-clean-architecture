@@ -36,6 +36,12 @@ internal sealed class WatchConfiguration : IEntityTypeConfiguration<WatchAggrega
         builder.ComplexProperty(w => w.DialColor,
             b => b.Property(x => x.Value).HasColumnName("dial_color"));
 
+        builder.Property(w => w.Style).HasConversion<string>().HasColumnName("style");
+        builder.Property(w => w.Movement).HasConversion<string>().HasColumnName("movement");
+        builder.Property(w => w.Occasion).HasConversion<string>().HasColumnName("occasion");
+        builder.Property(w => w.CaseMaterial).HasConversion<string>().HasColumnName("case_material");
+        builder.Property(w => w.BraceletType).HasConversion<string>().HasColumnName("bracelet_type");
+
         builder.Property(w => w.ImageUrl)
             .HasConversion(u => u.ToString(), s => new Uri(s))
             .HasColumnName("image_url");

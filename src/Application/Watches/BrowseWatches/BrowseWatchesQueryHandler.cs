@@ -1,7 +1,6 @@
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Dapper;
-using Domain.Watches.Enums;
 using Domain.Watches.ValueObjects;
 using SharedKernel;
 using System.Data;
@@ -63,8 +62,8 @@ internal sealed class BrowseWatchesQueryHandler(IDbConnectionFactory dbConnectio
             new
             {
                 request.Brand,
-                Style = (int?)request.Style,
-                Movement = (int?)request.Movement,
+                Style = request.Style?.ToString(),
+                Movement = request.Movement?.ToString(),
                 request.MinPrice,
                 request.MaxPrice
             });
@@ -102,13 +101,13 @@ internal sealed class BrowseWatchesQueryHandler(IDbConnectionFactory dbConnectio
         decimal CaseThicknessMm,
         decimal LugWidthMm,
         decimal LugToLugMm,
-        WatchStyle Style,
-        MovementType Movement,
-        WatchOccasion Occasion,
+        string Style,
+        string Movement,
+        string Occasion,
         decimal PriceEur,
         string DialColor,
-        CaseMaterial CaseMaterial,
-        BraceletType BraceletType,
+        string CaseMaterial,
+        string BraceletType,
         string ImageUrl,
         string? Description);
 }
