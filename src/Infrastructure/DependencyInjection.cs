@@ -36,7 +36,7 @@ public static class DependencyInjection
 
     private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
-        SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());
+        RegisterDapperTypeHandlers();
 
         string? connectionString = configuration.GetConnectionString("Database");
         Ensure.NotNullOrEmpty(connectionString);
@@ -66,6 +66,11 @@ public static class DependencyInjection
         services.AddSingleton<ICacheService, CacheService>();
 
         return services;
+    }
+
+    private static void RegisterDapperTypeHandlers()
+    {
+        SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());
     }
 
     private static IServiceCollection AddHealthChecks(this IServiceCollection services, IConfiguration configuration)

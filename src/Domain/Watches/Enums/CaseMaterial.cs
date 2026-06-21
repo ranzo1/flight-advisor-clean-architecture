@@ -2,7 +2,7 @@ namespace Domain.Watches.Enums;
 
 public enum CaseMaterial
 {
-    Steel,
+    Steel = 1,
     Gold,
     TwoToneGold,
     Titanium,

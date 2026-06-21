@@ -2,7 +2,7 @@ namespace Domain.Watches.Enums;
 
 public enum WatchOccasion
 {
-    Everyday,
+    Everyday = 1,
     Office,
     Formal,
     Beach,

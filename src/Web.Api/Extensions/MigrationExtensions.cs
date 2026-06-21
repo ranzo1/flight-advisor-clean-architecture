@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Database;
+using Infrastructure.Database.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace Web.Api.Extensions;
@@ -13,5 +14,7 @@ internal static class MigrationExtensions
             scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         dbContext.Database.Migrate();
+
+        dbContext.SeedDatabase();
     }
 }

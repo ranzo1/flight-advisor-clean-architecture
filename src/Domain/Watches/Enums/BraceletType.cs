@@ -2,7 +2,7 @@ namespace Domain.Watches.Enums;
 
 public enum BraceletType
 {
-    Bracelet,
+    Bracelet = 1,
     Leather,
     Rubber,
     Nato,
