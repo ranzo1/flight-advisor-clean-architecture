@@ -43,7 +43,7 @@ internal static class DatabaseSeeder
         context.SaveChanges();
     }
 
-    private static List<WatchAggregate> CreateWatches() =>
+    private static List<Watch> CreateWatches() =>
     [
         // ── Entry level €100–€500 ──────────────────────────────────────────
         Watch("Seiko", "SKX007", "SKX007K2",
@@ -205,14 +205,14 @@ internal static class DatabaseSeeder
             "The purest expression of watchmaking — officer-style caseback, Calibre 215 PS."),
     ];
 
-    private static WatchAggregate Watch(
+    private static Watch Watch(
         string brand, string model, string referenceNumber,
         decimal caseDiameterMm, decimal caseThicknessMm, decimal lugWidthMm, decimal lugToLugMm,
         WatchStyle style, MovementType movement, WatchOccasion occasion,
         decimal priceEur, string dialColor, CaseMaterial caseMaterial, BraceletType braceletType,
         string description)
     {
-        Result<WatchAggregate> result = WatchAggregate.Create(
+        Result<Watch> result = Domain.Watches.Entities.Watch.Create(
             brand, model, referenceNumber,
             caseDiameterMm, caseThicknessMm, lugWidthMm, lugToLugMm,
             style, movement, occasion,

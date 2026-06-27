@@ -12,8 +12,9 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     : DbContext(options), IUnitOfWork
 {
     public DbSet<User> Users { get; set; }
-    public DbSet<WatchAggregate> Watches { get; set; }
+    public DbSet<Watch> Watches { get; set; }
     public DbSet<CollectionItem> CollectionItems { get; set; }
+    public DbSet<UserPreferences> UserPreferences { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

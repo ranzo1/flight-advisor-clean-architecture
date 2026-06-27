@@ -41,5 +41,5 @@ public sealed record PriceRange
         return new PriceRange(min, max, currency.ToUpperInvariant());
     }
 
-    public bool Contains(Price price) => price.Eur >= Min && price.Eur <= Max;
+    public bool Contains(Price price) => price.Amount >= Min && price.Amount <= Max;
 }

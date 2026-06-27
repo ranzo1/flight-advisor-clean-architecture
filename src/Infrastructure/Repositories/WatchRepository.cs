@@ -8,12 +8,12 @@ namespace Infrastructure.Repositories;
 
 internal sealed class WatchRepository(ApplicationDbContext context) : IWatchRepository
 {
-    public Task<WatchAggregate?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
+    public Task<Watch?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
         context.Watches.FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
 
-    public async Task<IReadOnlyList<WatchAggregate>> BrowseAsync(WatchFilter filter, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<Watch>> BrowseAsync(WatchFilter filter, CancellationToken cancellationToken = default)
     {
-        IQueryable<WatchAggregate> query = context.Watches.AsQueryable();
+        IQueryable<Watch> query = context.Watches.AsQueryable();
 
         if (filter.Style.HasValue)
         {
@@ -28,8 +28,8 @@ internal sealed class WatchRepository(ApplicationDbContext context) : IWatchRepo
         if (filter.PriceRange is not null)
         {
             query = query.Where(w =>
-                w.Price.Eur >= filter.PriceRange.Min &&
-                w.Price.Eur <= filter.PriceRange.Max);
+                w.Price.Amount >= filter.PriceRange.Min &&
+                w.Price.Amount <= filter.PriceRange.Max);
         }
 
         return await query.ToListAsync(cancellationToken);

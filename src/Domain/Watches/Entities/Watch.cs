@@ -4,9 +4,9 @@ using SharedKernel;
 
 namespace Domain.Watches.Entities;
 
-public sealed class WatchAggregate : Entity
+public sealed class Watch : Entity
 {
-    private WatchAggregate(
+    private Watch(
         Guid id,
         Brand brand,
         Model model,
@@ -38,7 +38,7 @@ public sealed class WatchAggregate : Entity
         Description = description;
     }
 
-    private WatchAggregate()
+    private Watch()
     {
     }
 
@@ -56,7 +56,7 @@ public sealed class WatchAggregate : Entity
     public Uri ImageUrl { get; private set; } = new Uri("about:blank");
     public Description? Description { get; private set; }
 
-    public static Result<WatchAggregate> Create(
+    public static Result<Watch> Create(
         string brand,
         string model,
         string referenceNumber,
@@ -77,45 +77,45 @@ public sealed class WatchAggregate : Entity
         Result<Brand> brandResult = Brand.Create(brand);
         if (brandResult.IsFailure)
         {
-            return Result.Failure<WatchAggregate>(brandResult.Error);
+            return Result.Failure<Watch>(brandResult.Error);
         }
 
         Result<Model> modelResult = Model.Create(model);
         if (modelResult.IsFailure)
         {
-            return Result.Failure<WatchAggregate>(modelResult.Error);
+            return Result.Failure<Watch>(modelResult.Error);
         }
 
         Result<ReferenceNumber> referenceNumberResult = ReferenceNumber.Create(referenceNumber);
         if (referenceNumberResult.IsFailure)
         {
-            return Result.Failure<WatchAggregate>(referenceNumberResult.Error);
+            return Result.Failure<Watch>(referenceNumberResult.Error);
         }
 
         Result<WatchDimensions> dimensionsResult = WatchDimensions.Create(
             caseDiameterMm, caseThicknessMm, lugWidthMm, lugToLugMm);
         if (dimensionsResult.IsFailure)
         {
-            return Result.Failure<WatchAggregate>(dimensionsResult.Error);
+            return Result.Failure<Watch>(dimensionsResult.Error);
         }
 
         Result<Price> priceResult = Price.Create(priceEur);
         if (priceResult.IsFailure)
         {
-            return Result.Failure<WatchAggregate>(priceResult.Error);
+            return Result.Failure<Watch>(priceResult.Error);
         }
 
         Result<DialColor> dialColorResult = DialColor.Create(dialColor);
         if (dialColorResult.IsFailure)
         {
-            return Result.Failure<WatchAggregate>(dialColorResult.Error);
+            return Result.Failure<Watch>(dialColorResult.Error);
         }
 
         Description? watchDescription = string.IsNullOrWhiteSpace(description)
             ? null
             : new Description(description);
 
-        return new WatchAggregate(
+        return new Watch(
             Guid.NewGuid(),
             brandResult.Value,
             modelResult.Value,
@@ -135,6 +135,6 @@ public sealed class WatchAggregate : Entity
     public bool FitsWrist(decimal wristCircumferenceCm) =>
         Dimensions.FitsWrist(wristCircumferenceCm);
 
-    public bool IsWithinBudget(decimal budgetEur) =>
-        Price.IsWithinBudget(budgetEur);
+    public bool IsWithinBudget(decimal budget) =>
+        Price.IsWithinBudget(budget);
 }

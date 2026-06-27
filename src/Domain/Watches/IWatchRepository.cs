@@ -5,9 +5,9 @@ namespace Domain.Watches;
 
 public interface IWatchRepository
 {
-    Task<WatchAggregate?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Watch?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
-    Task<IReadOnlyList<WatchAggregate>> BrowseAsync(WatchFilter filter, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<Watch>> BrowseAsync(WatchFilter filter, CancellationToken cancellationToken = default);
 
     Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default);
 }

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Configurations;
 
-internal sealed class WatchConfiguration : IEntityTypeConfiguration<WatchAggregate>
+internal sealed class WatchConfiguration : IEntityTypeConfiguration<Watch>
 {
-    public void Configure(EntityTypeBuilder<WatchAggregate> builder)
+    public void Configure(EntityTypeBuilder<Watch> builder)
     {
         builder.HasKey(w => w.Id);
 
@@ -30,8 +30,11 @@ internal sealed class WatchConfiguration : IEntityTypeConfiguration<WatchAggrega
             dimensions.Property(d => d.LugToLugMm).HasColumnName("lug_to_lug_mm");
         });
 
-        builder.ComplexProperty(w => w.Price,
-            b => b.Property(x => x.Eur).HasColumnName("price_eur"));
+        builder.ComplexProperty(w => w.Price, b =>
+        {
+            b.Property(x => x.Amount).HasColumnName("price_eur");
+            b.Property(x => x.Currency).HasColumnName("price_currency");
+        });
 
         builder.ComplexProperty(w => w.DialColor,
             b => b.Property(x => x.Value).HasColumnName("dial_color"));
